@@ -175,6 +175,44 @@ void phys_ctlr::handle_event(struct input_event const &ev)
                     break;
             }
             break;
+        case Model::N64con:
+            switch (code) {
+                case BTN_TL:
+                    l = val;
+                    break;
+                case BTN_TR:
+                    r = val;
+                    break;
+                case BTN_TR2:
+                    zr = val;
+                    break;
+                case BTN_START:
+                    plus = val;
+                    break;
+                case BTN_NORTH:
+                    cup = val;
+                    break;
+                case BTN_EAST:
+                    cright = val;
+                    break;
+                case BTN_SOUTH:
+                    cdown = val;
+                    break;
+                case BTN_WEST:
+                    cleft = val;
+                    break;
+                case BTN_Z:
+                    z = val;
+                    break;
+                case BTN_SELECT:
+                    minus = val;
+                    break;
+                default:
+                    break;
+            }
+        case Model::Mdcon:
+            switch (code) {
+            }
         case Model::Left_Joycon:
             switch (code) {
                 case BTN_TL:
@@ -262,6 +300,14 @@ phys_ctlr::phys_ctlr(std::string const &devpath, std::string const &devname) :
         case 0x2017:
             model = Model::Snescon;
             std::cout << "Found SNES Controller\n";
+            break;
+        case 0x2019:
+            model = Model::N64con;
+            std::cout << "Found N64 Controller\n";
+            break;
+        case 0x201e:
+            model = Model::Mdcon;
+            std-cout << "Found Mega Drive Controller\n";
             break;
         default:
             model = Model::Unknown;
@@ -402,7 +448,7 @@ enum phys_ctlr::PairingState phys_ctlr::get_pairing_state() const
 
     // leds don't function on android joycons so no way of the user knowing the pair state
 #if defined(ANDROID) || defined(__ANDROID__)
-    if (model != Model::Procon && model != Model::Snescon)
+    if (model != Model::Procon && model != Model::Snescon && model != Model::N64con && model != Model::Mdcon)
         return PairingState::Waiting;
     else
         return PairingState::Lone;
@@ -447,5 +493,5 @@ enum phys_ctlr::PairingState phys_ctlr::get_pairing_state() const
 
 void phys_ctlr::zero_triggers()
 {
-    l = zl = r = zr = sl = sr = plus = minus = 0;
+    l = zl = r = zr = sl = sr = plus = minus = cup = cright = cdown = cleft = z = 0;
 }

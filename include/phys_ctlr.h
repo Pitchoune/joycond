@@ -9,7 +9,7 @@
 class phys_ctlr
 {
     public:
-        enum class Model { Procon, Snescon, Left_Joycon, Right_Joycon, Unknown };
+        enum class Model { Procon, Snescon, N64con, Mdcon, Left_Joycon, Right_Joycon, Unknown };
         enum class PairingState { Pairing, Lone, Waiting, Horizontal, Virt_Procon };
 
     private:
@@ -20,7 +20,7 @@ class phys_ctlr
         std::fstream player_leds[4];
         std::fstream player_led_triggers[4];
         std::fstream home_led;
-        bool l, zl, r, zr, sl, sr, plus, minus;
+        bool l, zl, r, zr, sl, sr, plus, minus, cup, cright, cdown, cleft, z;
         enum Model model;
         std::string mac_addr;
 
